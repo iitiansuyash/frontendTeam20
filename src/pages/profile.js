@@ -10,7 +10,7 @@ import QRCode from "react-qr-code";
 
 export default function Profile() {
   const [user, setUser] = useState(null);
-  const REACT_APP_BACKEND_URL = "https://hackfest-backend-3y92.onrender.com/";
+  const REACT_APP_BACKEND_URL = "https://backendteam20.onrender.com/update-profile";
   // const {currentUser} = useContext(UserContext);
   // const currentUser =
   // console.log("hi");

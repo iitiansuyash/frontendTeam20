@@ -9,7 +9,7 @@ const Login = () => {
   const router = useRouter()
   const { setCurrentUser } = useContext(UserContext)
   // const navigate = useNavigate();
-  const REACT_APP_BACKEND_URL = 'https://sat-olt.onrender.com/api/user';
+  const REACT_APP_BACKEND_URL = 'https://backendteam20.onrender.com/register';
   const [data, setData] = useState({
     email: '',
     password: '',
