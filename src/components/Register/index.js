@@ -1,86 +1,84 @@
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 import axios from 'axios'
-// import TeamMemberInput from './TeamMemberInput'
-import { UserContext } from '../../contexts/user.context'
-// import { useRouter } from 'next/router'
-// import { useNavigate } from "react-router-dom";
+import styles from '../../styles/Login.module.css'
+
 const Login = () => {
   const router = useRouter()
-  const { setCurrentUser } = useContext(UserContext)
-  // const navigate = useNavigate();
-  const REACT_APP_BACKEND_URL = 'https://backendteam20.onrender.com/register';
+  const REACT_APP_BACKEND_URL = 'http://localhost:8000/register'
+
   const [data, setData] = useState({
     email: '',
+    username: '',
     password: '',
-
   })
+
   const handleChange = (e) => {
     const { name, value } = e.target
     setData({ ...data, [name]: value })
   }
-  const formSubmit = async () => {
-    console.log(data);
 
-    setData({ ...data })
+  const formSubmit = async (e) => {
+    e.preventDefault()
     try {
       const res = await axios.post(REACT_APP_BACKEND_URL, data)
-      alert('User has been registerd successfully')
       console.log(res.data)
-    //   setCurrentUser(res.data._doc)
-    //   console.log(res.data._doc)
-    //   localStorage.setItem('Dammta', JSON.stringify(res.data._doc))
-    //   console.log(JSON.parse(localStorage.getItem('Dammta')))
-
+      alert('User has been registered successfully')
       setTimeout(() => {
-        router.push('/login')
+        router.push(`/profile/${res.data.data._id}`)
       }, 2000)
     } catch (err) {
-      alert(err)
+      console.log(err)
+      alert('An error occurred. Please try again.')
     }
-
-    // if (res.status == "200") {
-    //   alert("You have successfully registered!");
-    // } else {
-    // }
-    // try {
-    //   const { dat } = await axios.post(REACT_APP_BACKEND_URL, data);
-    // } catch (error) {
-    //   console.log(error);
-    // }
   }
+
   return (
-    <div className="login_wrap">
-      <div className="login_1">
-        <span>Register User</span>
+    <>
+      <div className={styles.background}>
+        <div className={styles.shape}></div>
+        <div className={styles.shape}></div>
       </div>
-      <form>
-        <input
-          name="email"
-          type="text"
-          placeholder="user email"
-          onChange={(e) => {
-            handleChange(e)
-          }}
-        />
-        <input
-          name="password"
-          type="password"
-          placeholder="password"
-          onChange={(e) => {
-            handleChange(e)
-          }}
-        />
-        <button
-          onClick={(e) => {
-            e.preventDefault()
-            formSubmit()
-          }}
-        >
-          Submit
-        </button>
-      </form>
-    </div>
+
+      <div className="login_wrap">
+        <form className={styles.form}>
+          <h1 className={styles.heading}>Register User</h1> <br /> <br/> <br/> <br/>
+          {/* <label htmlFor="email" className={styles.label}>
+            Email
+          </label> */}
+          <input
+            className={styles.input}
+            name="email"
+            type="text"
+            required
+            placeholder="User email"
+            onChange={handleChange}
+          />
+          {/* <label htmlFor="username" className={styles.label}>
+            Username
+          </label> */}
+          <input
+          className={styles.input}
+            name="username"
+            type="text"
+            required
+            placeholder="Username"
+            onChange={handleChange}
+          />
+          {/* <label htmlFor="password" className={styles.label}>
+            Password
+          </label> */}
+          <input
+          className={styles.input}
+            name="password"
+            type="password"
+            placeholder="Password"
+            onChange={handleChange}
+          />
+          <button onClick={formSubmit} className={styles.button}>Submit</button>
+        </form>
+      </div>
+    </>
   )
 }
 
