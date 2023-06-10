@@ -10,9 +10,9 @@ const Login = () => {
   const router = useRouter();
   const { setCurrentUser } = useContext(UserContext);
   const REACT_APP_BACKEND_URL =
-    "https://backendteam20.onrender.com/login";
+    "http://localhost:8000/login";
   const [data, setData] = useState({
-    email: "",
+    username: "",
     password: "",
     // id:'',
   });
@@ -28,23 +28,24 @@ const Login = () => {
       const res = await axios.post(REACT_APP_BACKEND_URL, data);
       // alert(res.data.message);
       // console.log(res.data.data);
-      console.log(res.data)
-      setCurrentUser(res.data);
+      console.log(res.data.data._id)
+      // setCurrentUser(res.data);
       // console.log(res);
       // localStorage.setItem("Dammta", JSON.stringify(res.data.data));
       // console.log(JSON.parse(localStorage.getItem("data")));
       setTimeout(() => {
         console.log(data);
-        const userid = JSON.stringify(data).id;
-        console.log(res.data.user.id);
-        router.push({
-          pathname: `/user/${res.data.user.id}`,
-          query: { 
-            id: res.data.user.id,
-            email:res.data.user.email,
-            name:res.data.user.name,
-           },
-        } );
+        // const userid = JSON.stringify(data).id;
+        // console.log(res.data._id);
+        // router.push({
+        //   pathname: `/profile/${res.data.data._id}`,
+        //   // query: { 
+        //   //   id: res.data.user.id,
+        //   //   email:res.data.user.email,
+        //   //   name:res.data.user.name,
+        //   //  },
+        // } );
+        router.push(`/profile/${res.data.data._id}`)
       }, 1000);
     } catch (err) {
       alert(err);
@@ -67,7 +68,7 @@ const Login = () => {
             type="text"
             id="username"
             // name="Player_Email"
-            name="email" 
+            name="username" 
             required
             placeholder="Team Leader's Email"
             onChange={(e) => {
